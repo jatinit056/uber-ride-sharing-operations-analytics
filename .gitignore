@@ -1,0 +1,28 @@
+# Python / Jupyter
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Office / LibreOffice temporary and lock files
+~$*
+.~lock.*#
+
+# Power BI temporary files (commit the .pbix itself)
+*.pbix.bak
+.pbi/
+
+# Large raw trip files (over GitHub's limits) — download with: python scripts/download_data.py
+data/raw/uber-raw-data-*14.csv
+data/raw/uber-raw-data-janjune-15.csv
+data/raw/uber-raw-data-janjune-15.csv.zip
+data/raw/*.part

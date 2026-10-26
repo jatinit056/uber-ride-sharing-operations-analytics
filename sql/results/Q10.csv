@@ -1,0 +1,10 @@
+day,reason,weekday,trips,normal_same_weekday,baseline_days,vs_normal_pct
+2014-05-26,Memorial Day,Monday,10202,18695,6,-45.43
+2014-07-04,Independence Day,Friday,14148,28160,6,-49.76
+2014-09-01,Labor Day,Monday,19961,25801,6,-22.64
+2015-01-01,New Year's Day,Thursday,58045,69349,3,-16.30
+2015-01-19,Martin Luther King Jr. Day,Monday,47025,59042,4,-20.35
+2015-01-26,Blizzard: travel ban from 11 pm (external event),Monday,44310,59042,4,-24.95
+2015-01-27,Blizzard: travel ban until the morning (external event),Tuesday,25954,64354,6,-59.67
+2015-02-16,Presidents' Day,Monday,73672,63475,5,16.07
+2015-05-25,Memorial Day,Monday,59748,78071,6,-23.47

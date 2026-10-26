@@ -1,0 +1,14 @@
+step,table,rows_affected,action
+Parse 'Date/Time' text (M/D/YYYY H:MM:SS) to datetime,pickups_2014,4534327,type conversion
+"Flag pickups outside the NYC area (kept in counts, left out of the map)",pickups_2014,29749,flag
+Keep identical rows (validated against TLC daily totals),pickups_2014,82581,kept + documented
+Flag 2014-09-30 as partial day (no pickups after 22:59),pickups_2014,33431,flag
+Parse 'Pickup_date' text to datetime,pickups_2015,14270479,type conversion
+Fill missing affiliated base with 'Unknown',pickups_2015,162195,fill missing
+Keep identical rows (minute + zone level data; possible ~2% double records documented),pickups_2015,898225,kept + documented
+Add service area (airports separated from their borough),taxi_zones,3,derived column
+Parse FOIL dates; add trips per active vehicle,foil_daily,354,type conversion + derived
+Reshape TLC summary from wide (one column per company) to long,market_daily_2014,1104,reshape
+Drop empty helper columns and blank trailing line,fhv_other_2015,1,remove empty
+"Convert text numbers with thousands separators (' 1,137 ') to integers",fhv_other_2015,26181,type conversion
+Vehicle count shown as '-' on days with trips -> missing (not zero),fhv_other_2015,1716,set missing

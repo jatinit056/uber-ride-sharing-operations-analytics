@@ -1,0 +1,113 @@
+// =====================================================================
+// DAX measures of powerbi/Uber_NYC.pbix — table _Measures, grouped by display folder.
+// Copied from the model that the dashboard uses (same names, formulas and formats).
+// =====================================================================
+
+// ------------------------------------------------------------ Demand
+Trips =                                // format: #,0
+    SUM ( fact_daily[trips] )
+Days With Data =                       // format: #,0
+    DISTINCTCOUNT ( fact_daily[date] )
+Avg Trips per Day =                    // format: #,0
+    DIVIDE ( [Trips], [Days With Data] )
+Trips 2014 =                           // format: #,0
+    CALCULATE ( [Trips], fact_daily[period] = "2014 Apr-Sep" )
+Trips 2015 =                           // format: #,0
+    CALCULATE ( [Trips], fact_daily[period] = "2015 Jan-Jun" )
+Avg Trips per Day 2015 =               // format: #,0
+    CALCULATE ( [Avg Trips per Day], fact_daily[period] = "2015 Jan-Jun" )
+Trips Apr-Jun 2014 =                   // format: #,0
+    CALCULATE ( [Trips], DATESBETWEEN ( 'Date'[Date], DATE ( 2014, 4, 1 ), DATE ( 2014, 6, 30 ) ) )
+Trips Apr-Jun 2015 =                   // format: #,0
+    CALCULATE ( [Trips], DATESBETWEEN ( 'Date'[Date], DATE ( 2015, 4, 1 ), DATE ( 2015, 6, 30 ) ) )
+YoY Growth Apr-Jun % =                 // format: 0.0%
+    DIVIDE ( [Trips Apr-Jun 2015], [Trips Apr-Jun 2014] ) - 1
+Trips Previous Month =                 // format: #,0
+    CALCULATE ( [Trips], DATEADD ( 'Date'[Date], -1, MONTH ) )
+MoM Growth % =                         // format: 0.0%
+    VAR PreviousMonth = [Trips Previous Month]
+    RETURN
+        IF ( NOT ISBLANK ( PreviousMonth ), DIVIDE ( [Trips], PreviousMonth ) - 1 )
+Trips 7-Day Average =                  // format: #,0
+    AVERAGEX ( DATESINPERIOD ( 'Date'[Date], MAX ( 'Date'[Date] ), -7, DAY ), [Trips] )
+Trips 7-Day Avg 2015 =                 // format: #,0
+    CALCULATE ( [Trips 7-Day Average], fact_daily[period] = "2015 Jan-Jun" )
+Weekend Share % =                      // format: 0.0%
+    DIVIDE ( CALCULATE ( [Trips], fact_daily[is_weekend] = TRUE () ), [Trips] )
+
+// ------------------------------------------------------------ Hours
+Hourly Trips =                         // format: #,0
+    SUM ( fact_hourly[trips] )
+Avg Trips per Hour =                   // format: #,0
+    AVERAGEX ( fact_hourly, fact_hourly[trips] )
+Share of Day's Trips % =               // format: 0.0%
+    DIVIDE ( [Hourly Trips], CALCULATE ( [Hourly Trips], ALL ( fact_hourly[hour], fact_hourly[time_band] ) ) )
+Peak Hour =                            // format: 0":00"
+    MAXX ( TOPN ( 1, VALUES ( fact_hourly[hour] ), [Avg Trips per Hour], DESC ), fact_hourly[hour] )
+Peak Hour 2015 =                       // format: 0":00"
+    CALCULATE ( [Peak Hour], fact_hourly[period] = "2015 Jan-Jun" )
+Peak-to-Trough Ratio =                 // format: 0.0
+    VAR Hours = ADDCOLUMNS ( VALUES ( fact_hourly[hour] ), "@avg", [Avg Trips per Hour] )
+    RETURN
+        DIVIDE ( MAXX ( Hours, [@avg] ), MINX ( Hours, [@avg] ) )
+
+// ------------------------------------------------------------ Geography
+Zone Trips =                           // format: #,0
+    SUM ( fact_zone_daily[trips] )
+Zone Trips (Known) =                   // format: #,0
+    CALCULATE ( [Zone Trips], dim_zone[borough] <> "Unknown" )
+Area Share % =                         // format: 0.0%
+    DIVIDE ( [Zone Trips], CALCULATE ( [Zone Trips (Known)], ALL ( dim_zone ) ) )
+Manhattan Share % =                    // format: 0.0%
+    CALCULATE ( [Area Share %], dim_zone[service_area] = "Manhattan" )
+Airport Share % =                      // format: 0.0%
+    CALCULATE ( [Area Share %], dim_zone[service_area] = "Airports" )
+Outside Manhattan Share % =            // format: 0.0%
+    1 - [Manhattan Share %]
+Zone Rank =                            // format: 0
+    RANKX ( ALL ( dim_zone[zone] ), [Zone Trips], , DESC, DENSE )
+Zone Trips (Top 10) =                  // format: #,0
+    VAR ZoneRank = RANKX ( ALLSELECTED ( dim_zone ), [Zone Trips (Known)], , DESC, DENSE )
+    RETURN
+        IF ( NOT ISBLANK ( [Zone Trips (Known)] ) && ZoneRank <= 10, [Zone Trips (Known)] )
+Airport Share by Hour % =              // format: 0.0%
+    DIVIDE ( CALCULATE ( SUM ( fact_area_hourly[trips] ), fact_area_hourly[service_area] = "Airports" ), SUM ( fact_area_hourly[trips] ) )
+Area Growth Jan-Jun % =                // format: 0.0%
+    VAR JanPerDay = CALCULATE ( [Zone Trips], DATESBETWEEN ( 'Date'[Date], DATE ( 2015, 1, 1 ), DATE ( 2015, 1, 31 ) ) ) / 31
+    VAR JunPerDay = CALCULATE ( [Zone Trips], DATESBETWEEN ( 'Date'[Date], DATE ( 2015, 6, 1 ), DATE ( 2015, 6, 30 ) ) ) / 30
+    RETURN
+        IF ( SELECTEDVALUE ( dim_zone[service_area] ) <> "Unknown" && JanPerDay > 0, DIVIDE ( JunPerDay, JanPerDay ) - 1 )
+
+// ------------------------------------------------------------ Bases
+Base Trips =                           // format: #,0
+    SUM ( fact_base_daily[trips] )
+Base Share % =                         // format: 0.0%
+    DIVIDE ( [Base Trips], CALCULATE ( [Base Trips], ALL ( dim_base ) ) )
+
+// ------------------------------------------------------------ Supply
+FOIL Trips =                           // format: #,0
+    SUM ( fact_foil[trips] )
+Vehicle Days =                         // format: #,0
+    SUM ( fact_foil[active_vehicles] )
+Trips per Active Vehicle per Day =     // format: 0.00
+    DIVIDE ( [FOIL Trips], [Vehicle Days] )
+Avg Active Vehicles per Day =          // format: #,0
+    AVERAGEX ( VALUES ( fact_foil[date] ), CALCULATE ( [Vehicle Days] ) )
+
+// ------------------------------------------------------------ Market
+Market Trips per Day =                 // format: #,0
+    AVERAGEX ( VALUES ( fact_market[date] ), CALCULATE ( SUM ( fact_market[trips] ) ) )
+Uber Trips per Day =                   // format: #,0
+    CALCULATE ( [Market Trips per Day], fact_market[company] = "Uber" )
+Yellow Taxi Trips per Day =            // format: #,0
+    CALCULATE ( [Market Trips per Day], fact_market[company] = "Yellow Taxis" )
+Lyft Trips per Day =                   // format: #,0
+    CALCULATE ( [Market Trips per Day], fact_market[company] = "Lyft" )
+Uber vs Yellow Taxi % =                // format: 0.0%
+    DIVIDE ( [Uber Trips per Day], [Yellow Taxi Trips per Day] )
+Uber vs Yellow Sep 2014 =              // format: 0.0%
+    CALCULATE ( [Uber vs Yellow Taxi %], DATESBETWEEN ( 'Date'[Date], DATE ( 2014, 9, 1 ), DATE ( 2014, 9, 30 ) ) )
+Uber Trips (TLC) =                     // format: #,0
+    CALCULATE ( SUM ( fact_market[trips] ), fact_market[company] = "Uber" )
+Lyft Trips (TLC) =                     // format: #,0
+    CALCULATE ( SUM ( fact_market[trips] ), fact_market[company] = "Lyft" )

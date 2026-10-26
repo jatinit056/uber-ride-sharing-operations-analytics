@@ -1,0 +1,14 @@
+# SHA-256 checksums of the raw files as published in fivethirtyeight/uber-tlc-foil-response (commit 63bb878).
+# The first 8 files are downloaded/extracted by scripts/download_data.py (too large for GitHub); the last 4 are stored in this folder.
+4c92b95b9918e73ae84bade0bffef6e758e792c247469523130d3c1ad7b646e0  uber-raw-data-apr14.csv
+3940ebee250998e32e810fed596fa2e5ac170e6926e0da43b977b6f76c6921e9  uber-raw-data-may14.csv
+ca999fb126a068a429c266d6781b1e8825b2acc1c74644481222ca6f01dbb557  uber-raw-data-jun14.csv
+42bc47c906a3d17b2b4f9543594ab300db9ac5f8bbb7a6060d215fa30a8c62c2  uber-raw-data-jul14.csv
+710e5766a8f2c13cfa9fd1dda30a4f6c5cba1b964a1efeb7087df0085a86f091  uber-raw-data-aug14.csv
+3c7bda88de4106b5ebeb489545a17b09133a6e5c0efde71d9666d0ee14b7b7d9  uber-raw-data-sep14.csv
+b85c7373ce0b0186eb204e14600033033abf0b2ce47cc97b4ca59e1ec6ec8bec  uber-raw-data-janjune-15.csv.zip
+e6bd991a1d8a673e94c06231ece1e6cec9253f8954124ae130b17a92c5116777  uber-raw-data-janjune-15.csv
+5dc91d7d4eb133ca6ce612a0ca9919383baf3193d879311ea459a10dd646e076  taxi-zone-lookup.csv
+d76ff1bc09f209d55f8edfb2d864b121295088ce8d5f3b105dc97e56640ec1a0  Uber-Jan-Feb-FOIL.csv
+301e64d245da735253efa35953eef97cabaa9dd19eddf541d4113b6ea23a709d  other-FHV-data-jan-aug-2015.csv
+b71389da39f42c1d9e7adafb9d5e1400bd034388bf25b2804f6ce20a62cc7ba6  Aggregate FHV Data.xlsx

@@ -1,0 +1,8 @@
+service_area,trips,share_pct,share_of_known_zones_pct
+Manhattan,10371060,72.675,72.707
+Brooklyn,2322000,16.271,16.278
+Queens,788657,5.526,5.529
+Airports,555393,3.892,3.894
+Bronx,220146,1.543,1.543
+Staten Island,6959,0.049,0.049
+Unknown,6264,0.044,

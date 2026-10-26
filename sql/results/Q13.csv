@@ -1,0 +1,17 @@
+borough,rank_in_borough,zone,trips
+Bronx,1,Riverdale/North Riverdale/Fieldston,15837
+Bronx,2,Spuyten Duyvil/Kingsbridge,15303
+Bronx,3,West Concourse,13381
+Brooklyn,1,Williamsburg (North Side),217938
+Brooklyn,2,Park Slope,160037
+Brooklyn,3,Williamsburg (South Side),141357
+EWR,1,Newark Airport,105
+Manhattan,1,Midtown Center,460732
+Manhattan,2,TriBeCa/Civic Center,420356
+Manhattan,3,Union Sq,419045
+Queens,1,JFK Airport,289169
+Queens,2,LaGuardia Airport,266119
+Queens,3,Astoria,90870
+Staten Island,1,Bloomfield/Emerson Hill,925
+Staten Island,2,Heartland Village/Todt Hill,764
+Staten Island,3,South Beach/Dongan Hills,692

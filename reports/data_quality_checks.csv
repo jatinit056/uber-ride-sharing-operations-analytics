@@ -1,0 +1,20 @@
+check,result,action
+2014 timestamps inside the month of their file,0 mismatches,none needed
+2014 date range,2014-04-01 00:00 to 2014-09-30 22:59,none
+2014-09-30 hours present,23 of 24 (last pickup 22:59),flag: last hour of the period missing
+"2014 pickups outside the NYC area (lat 40.49-40.92, lon -74.27 to -73.68)","29,749 (0.66%)","kept in trip counts (real trips), excluded from the pickup map"
+2014 pickups far outside the metro area,"2,561",kept (included in the row above)
+2014 base codes known,100% known (5 bases),none
+2015 date range,2015-01-01 00:00 to 2015-06-30 23:59,none
+2015 dispatching bases known,100% known (8 bases),none
+2015 affiliated base outside Uber's 8 bases,12.62% of trips (284 affiliated bases),kept: drivers affiliated with other bases can take Uber trips
+2015 locationID found in zone table,100%,none
+2015 pickups in zone 264/265 ('Unknown'),"6,264 (0.04%)",kept as borough 'Unknown'
+2015-03-08 (clocks move forward 2:00 -> 3:00),hour 2 present: False,expected - no action
+2015 timestamp precision,"seconds present in 98% of Jan-Feb rows, 0% of Mar-Jun rows",precision changed in March 2015; analysis is hourly
+FOIL rows = 59 days x 6 bases,"354 rows, 6 bases",none
+FOIL active vehicles / trips > 0,True,none
+TLC summary Uber column = 2014 pickup rows per day,92 of 92 days identical,validation passed
+Base report: Uber bases included?,0 rows,report covers other bases only
+Base report: vehicle count shown as '-',"1,716 base-days (all with trips > 0)",treated as missing
+"Base report: bases reporting per day, by month","01: 59, 02: 58, 03: 55, 04: 195, 05: 202, 06: 165, 07: 122, 08: 5",coverage changes from month to month -> NOT used for market share

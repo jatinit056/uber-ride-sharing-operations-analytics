@@ -1,0 +1,7 @@
+service_area,trips_per_day_jan,trips_per_day_jun,growth_pct,share_jan_pct,share_jun_pct
+Manhattan,47092.7,66531.3,41.28,74.75,70.89
+Brooklyn,10007.5,16084.6,60.72,15.88,17.14
+Queens,2921.5,5698.4,95.05,4.64,6.07
+Airports,2225.5,3843.9,72.72,3.53,4.10
+Bronx,727.7,1633.4,124.45,1.16,1.74
+Staten Island,26.5,55.8,110.18,0.04,0.06
